@@ -12,6 +12,7 @@ winit = { version = "0.30", default-features = false, features = ["android-nativ
 wgpu = "22.1"
 pollster = "0.3"
 log = "0.4"
+photocraft-psd = { git = "https://github.com/storytold/photocraft", rev = "a62ef68" }
 
 [target.'cfg(target_os = "android")'.dependencies]
 android-activity = { version = "0.6", features = ["native-activity"] }
