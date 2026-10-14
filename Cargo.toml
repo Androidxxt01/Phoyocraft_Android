@@ -1,0 +1,31 @@
+[package]
+name = "photocraft_android"
+version = "0.0.1"
+edition = "2021"
+description = "Proof of concept: PhotoCraft on Android (wgpu + winit)"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+winit = { version = "0.30", default-features = false, features = ["android-native-activity", "rwh_06"] }
+wgpu = "22.1"
+pollster = "0.3"
+log = "0.4"
+
+[target.'cfg(target_os = "android")'.dependencies]
+android-activity = { version = "0.6", features = ["native-activity"] }
+android_logger = "0.14"
+
+# Configuracao para o cargo-apk
+[package.metadata.android]
+package = "dev.photocraft.poc"
+build_targets = ["aarch64-linux-android"]
+apk_name = "photocraft-poc"
+
+[package.metadata.android.sdk]
+min_sdk_version = 26
+target_sdk_version = 33
+
+[package.metadata.android.application]
+label = "PhotoCraft PoC"
