@@ -10,6 +10,8 @@ use winit::{
     window::{Window, WindowId},
 };
 
+use photocraft_psd as _;
+
 struct Gfx {
     window: Arc<Window>,
     surface: wgpu::Surface<'static>,
