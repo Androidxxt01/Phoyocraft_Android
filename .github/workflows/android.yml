@@ -1,0 +1,41 @@
+name: Build Android APK
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-linux-android
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Instalar cargo-apk
+        run: cargo install cargo-apk --locked
+
+      - name: Build APK
+        env:
+          ANDROID_HOME: /usr/local/lib/android/sdk
+          ANDROID_NDK_ROOT: ${{ env.ANDROID_NDK_LATEST_HOME }}
+        run: cargo apk build --release
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: photocraft-poc-apk
+          path: target/release/apk/*.apk
+
+      - name: Publicar Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: target/release/apk/*.apk
