@@ -29,3 +29,6 @@ target_sdk_version = 33
 
 [package.metadata.android.application]
 label = "PhotoCraft PoC"
+[package.metadata.android.signing.release]
+path = "release.keystore"
+keystore_password = "android"
